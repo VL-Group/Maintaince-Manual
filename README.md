@@ -68,6 +68,82 @@ Match User admin,ubuntu      # Per-User settings
 user@host:~$ sudo service sshd restart
 ```
 
+### 添加新硬盘
+
+使用 `parted` 初始化硬盘并分区：
+```console
+user@host:~$ sudo fdisk -l
+...
+Disk /dev/sdc: 7.28 TiB, 8001563222016 bytes, 15628053168 sectors
+Disk model: HGST HUS728T8TAL
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: none
+Disk identifier: 41426009-6523-4E08-AEB4-3E0F118F50CF
+...
+```
+这里，`/dev/sdc`还没有初始化和分区，我们使用 `parted` 进行初始化并分区。
+
+```console
+user@host:~$ sudo parted /dev/sdb
+GNU Parted 3.3
+Using /dev/sdc
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) mklabel gpt
+Warning: The existing disk label on /dev/sdc will be destroyed and all data on this disk will be lost. Do you want to
+continue?
+Yes/No? yes
+(parted) mkpart primary 2048s 100%
+(parted) quit
+Information: You may need to update /etc/fstab.
+```
+
+请注意，我们首先键入 `mklabel gpt` 将分区表建立为 `GPT` 格式；然后，我们使用 `mkpart primary 2048s 100%` 创建了一个分区（整个硬盘），第一个参数 `2048s` 是硬盘的 `4k` 对齐大小。
+
+然后，我们的 `fdisk` 信息变为：
+```console
+user@host:~$ sudo fdisk -l
+...
+Disk /dev/sdc: 7.28 TiB, 8001563222016 bytes, 15628053168 sectors
+Disk model: HGST HUS728T8TAL
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: none
+Disk identifier: 41426009-6523-4E08-AEB4-3E0F118F50CF
+...
+```
+```console
+Disk /dev/sdc: 7.28 TiB, 8001563222016 bytes, 15628053168 sectors
+Disk model: ST8000NM000A-2KE
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: 553AC23F-C393-4B23-B193-AA193F02EF34
+
+Device     Start         End     Sectors  Size Type
+/dev/sdc1   2048 15628052479 15628050432  7.3T Linux filesystem
+```
+
+我们就可以在 `/dev/sdc1` 上面创建文件系统了。
+
+```console
+user@host:~$ sudo mkfs.ext4 /dev/sdc1
+Creating filesystem with 1953506304 4k blocks and 244191232 inodes
+Filesystem UUID: aa275f52-73a9-4dbc-9656-b48ead13a53c
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
+        102400000, 214990848, 512000000, 550731776, 644972544, 1934917632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done
+```
+
 ### 挂载硬盘
 
 列出所有可用硬盘

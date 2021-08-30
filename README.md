@@ -86,7 +86,7 @@ Disk identifier: 41426009-6523-4E08-AEB4-3E0F118F50CF
 这里，`/dev/sdc`还没有初始化和分区，我们使用 `parted` 进行初始化并分区。
 
 ```console
-user@host:~$ sudo parted /dev/sdb
+user@host:~$ sudo parted /dev/sdc
 GNU Parted 3.3
 Using /dev/sdc
 Welcome to GNU Parted! Type 'help' to view a list of commands.
@@ -104,17 +104,6 @@ Information: You may need to update /etc/fstab.
 然后，我们的 `fdisk` 信息变为：
 ```console
 user@host:~$ sudo fdisk -l
-...
-Disk /dev/sdc: 7.28 TiB, 8001563222016 bytes, 15628053168 sectors
-Disk model: HGST HUS728T8TAL
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 4096 bytes
-I/O size (minimum/optimal): 4096 bytes / 4096 bytes
-Disklabel type: none
-Disk identifier: 41426009-6523-4E08-AEB4-3E0F118F50CF
-...
-```
-```console
 Disk /dev/sdc: 7.28 TiB, 8001563222016 bytes, 15628053168 sectors
 Disk model: ST8000NM000A-2KE
 Units: sectors of 1 * 512 = 512 bytes

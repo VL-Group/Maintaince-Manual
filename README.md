@@ -266,7 +266,7 @@ https://developer.nvidia.com/rdp/cudnn-download
 依照 https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html 上的步骤操作。
 
 ![](d.png)
- 
+
 ![](e.png)
 
 

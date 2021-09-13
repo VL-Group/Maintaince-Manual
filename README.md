@@ -25,6 +25,7 @@
 
 <!--te-->
 
+---
 
 ## 安装纯净系统
 
@@ -47,6 +48,8 @@
 * 关机并冷启动，在 BIOS 启动过程中调出启动菜单，选择 USB 设备作为启动设备。
 * 可以全部使用默认选项进行安装，需要格外注意安装的硬盘不能选错。
 * 一般在格式化硬盘的时候不启用 LVM Group（Ubuntu），而 CentOS 可以启用（直接选中一整块硬盘然后抹掉数据作为系统盘，这时默认启用 LVM Group）。
+
+---
 
 ## 安装后首次运行
 
@@ -293,12 +296,42 @@ APT 自动更新使系统软件包始终最新，请酌情采用。
 user@host:~$ sudo crontab -e
 42 3 * * * apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove
 ```
+---
 
 ## 系统管理
 
-**请小心使用此节提及的脚本**
+**请小心使用下面提及的脚本**
 
-这些脚本可以在这个目录里找到。你可以直接从网页拷贝到 `~` 下，或者使用 `git clone` 克隆下来。
+这些脚本可以在当前存储库里找到。你可以直接从网页把脚本拷贝到工作目录下，或者使用 `git clone` 克隆下来。
+
+### 更改交换空间大小
+
+首先定位交换空间位置：
+
+如果未使用 LVM Group，交换空间一般是位于根目录的一个文件：
+```console
+user@host:~$ sudo swapon -s
+Filename                                Type            Size    Used    Priority
+/swap.img                               file            8388604 128512  -2
+```
+而如果使用了 LVM Group，上述命令会打印出 `/dev/dm-1`。这是因为交换空间实际上是通过 `/dev/mapper/xxx-swap` 实现的。
+
+如果使用交换文件，那么直接删除这个文件，并新建一个更大的文件作为交换空间即可：
+```console
+user@host:~$ sudo swapoff /swapfile
+user@host:~$ sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 oflag=append conv=notrunc
+user@host:~$ sudo mkswap /swapfile
+user@host:~$ sudo swapon -a
+```
+**请注意 `/etc/fstab` 中是否已经添加了 `swap` 记录，这条记录中的 swap 位置要与文件名一致**
+
+而如果是使用的 `/dev/mapper/xxx-swap`，那么使用 `lvresize` 命令：
+```console
+user@host:~$ swapoff /dev/mapper/xxx-swap
+user@host:~$ lvresize -L 10G /dev/mapper/xxx-swap
+user@host:~$ sudo mkswap /dev/mapper/xxx-swap
+user@host:~$ sudo swapon -a
+```
 
 ### 创建新用户
 

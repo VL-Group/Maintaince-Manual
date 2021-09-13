@@ -42,11 +42,11 @@
 
 等待制作完成。
 
-### Installation
+### 安装过程
 
 * 关机并冷启动，在 BIOS 启动过程中调出启动菜单，选择 USB 设备作为启动设备。
 * 可以全部使用默认选项进行安装，需要格外注意安装的硬盘不能选错。
-* 一般在格式化硬盘的时候不启用 LVM Group。
+* 一般在格式化硬盘的时候不启用 LVM Group（Ubuntu），而 CentOS 可以启用（直接选中一整块硬盘然后抹掉数据作为系统盘，这时默认启用 LVM Group）。
 
 ## 安装后首次运行
 
@@ -55,7 +55,7 @@
 ```console
 user@host:~$ sudo vim /etc/netplan/00-installer-config.yaml
 ```
-以如下形式启用固定 IP 定制和指定 DNS 服务器。
+以如下形式启用固定 IP 地址，同时指定 DNS 服务器。
 ```
 network:
   ethernets:

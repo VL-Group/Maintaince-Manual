@@ -120,12 +120,12 @@ user@host:~$ sudo parted /dev/sdc
 GNU Parted 3.3
 Using /dev/sdc
 Welcome to GNU Parted! Type 'help' to view a list of commands.
-(parted) mklabel gpt
+$ (parted) mklabel gpt
 Warning: The existing disk label on /dev/sdc will be destroyed and all data on this disk will be lost. Do you want to
 continue?
-Yes/No? yes
-(parted) mkpart primary 2048s 100%
-(parted) quit
+$ Yes/No? yes
+$ (parted) mkpart primary 2048s 100%
+$ (parted) quit
 Information: You may need to update /etc/fstab.
 ```
 

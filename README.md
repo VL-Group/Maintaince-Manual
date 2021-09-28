@@ -250,16 +250,13 @@ sudo systemctl set-default multi-user.target
 ```
 这些命令将 Linux 系统设置于无图形界面模式，这样可以完全停止 X 进程及释放其在 GPU 中的预留显存，并避免自动休眠。
 
-### 安装 CUDA Toolkit
+#### 将 CUDA 可执行文件放入搜索路径
 
+编辑 `/etc/environment`，把 `/usr/local/cuda/bin/` 加入 `PATH` 中，如同下面一样
 ```console
-sudo apt list cuda-toolkit*
+PATH="/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:...（其他路径）"
 ```
-
-
-```console
-sudo apt install cuda-toolkit-xx-x
-```
+这样就可以运行 `nvcc` 等程序。
 
 ### （可选）安装 CuDNN, NCCL, TensorRT
 

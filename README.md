@@ -12,7 +12,7 @@
       * [添加新硬盘](#添加新硬盘)
       * [挂载硬盘](#挂载硬盘)
       * [驱动](#驱动)
-      * [安装 CUDA Toolkit](#安装-cuda-toolkit)
+         * [将 CUDA 可执行文件放入搜索路径](#将-cuda-可执行文件放入搜索路径)
       * [（可选）安装 CuDNN, NCCL, TensorRT](#可选安装-cudnn-nccl-tensorrt)
       * [（可选）Linux 软件源镜像](#可选linux-软件源镜像)
       * [（可选）APT 自动更新](#可选apt-自动更新)
@@ -22,7 +22,7 @@
       * [（仅限重装时使用）自动重设文件夹的所有者](#仅限重装时使用自动重设文件夹的所有者)
       * [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
 
-<!-- Added by: runner, at: Tue Sep 28 07:00:26 UTC 2021 -->
+<!-- Added by: runner, at: Tue Sep 28 07:13:55 UTC 2021 -->
 
 <!--te-->
 

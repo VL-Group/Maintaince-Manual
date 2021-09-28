@@ -249,7 +249,7 @@ https://developer.nvidia.com/cuda-downloads
 sudo systemctl enable multi-user.target --force
 sudo systemctl set-default multi-user.target
 ```
-这些命令将 Linux 系统设置于无图形界面模式，这样可以完全停止 X 进程及释放其在 GPU 中的预留显存，并避免自动休眠。
+执行完后请**重启系统**。这些命令将 Linux 系统设置于无图形界面模式，这样可以完全停止 X 进程及释放其在 GPU 中的预留显存，并避免自动休眠。
 
 #### 将 CUDA 可执行文件放入搜索路径
 

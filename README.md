@@ -287,7 +287,7 @@ https://developer.nvidia.com/nccl/nccl-download
 * `Pypi`，`Conda` 等软件源镜像也可在上述地址中找到。
 
 例如，我们为 `Ubuntu` 更换 `SJTU` 镜像源，命令如下：
-```console:
+```console
 user@host:~$ sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list
 ```
 

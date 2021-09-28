@@ -252,7 +252,7 @@ sudo systemctl set-default multi-user.target
 
 #### 将 CUDA 可执行文件放入搜索路径
 
-编辑 `/etc/environment`，把 `/usr/local/cuda/bin/` 加入 `PATH` 中，如同下面一样
+编辑 `/etc/environment`，把 `/usr/local/cuda/bin` 加入 `PATH` 中，如同下面一样
 ```console
 PATH="/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:...（其他路径）"
 ```

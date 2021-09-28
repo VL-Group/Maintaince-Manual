@@ -239,11 +239,11 @@ https://developer.nvidia.com/cuda-downloads
 
 ![](b.png)
 
-依照网页上给出的指示操作，并重启系统。
+依照网页上给出的指示操作，并**重启系统**。
 
 ![](c.png)
 
-**禁用 X**：
+#### 禁用 X：
 ```console
 sudo systemctl enable multi-user.target --force
 sudo systemctl set-default multi-user.target

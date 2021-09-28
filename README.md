@@ -22,7 +22,7 @@
       * [（仅限重装时使用）自动重设文件夹的所有者](#仅限重装时使用自动重设文件夹的所有者)
       * [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
 
-<!-- Added by: runner, at: Tue Sep 28 07:13:55 UTC 2021 -->
+<!-- Added by: runner, at: Tue Sep 28 07:14:25 UTC 2021 -->
 
 <!--te-->
 

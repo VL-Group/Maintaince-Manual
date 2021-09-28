@@ -244,7 +244,7 @@ https://developer.nvidia.com/cuda-downloads
 
 ![](c.png)
 
-#### 禁用 X：
+#### 禁用 X
 ```console
 sudo systemctl enable multi-user.target --force
 sudo systemctl set-default multi-user.target

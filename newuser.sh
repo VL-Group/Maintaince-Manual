@@ -2,12 +2,16 @@
 
 if [ $# -eq 0 ]
     then
-        echo "Wrong input arguments, expect [username] [password]"
+        echo "Wrong input arguments, expect [username]"
         exit
 fi
 
 echo "Adding user and group '$1'"
-useradd -m -p $(openssl passwd -1 $2) -U $1
+newPasswd=$(openssl rand -base64 14)
+echo $newPasswd
+
+
+useradd -m -p $(openssl passwd -1 $newPasswd) -U $1
 hdddir=$(find /mnt -maxdepth 2 -name "$1")
 i=0
 for dir in $hdddir; do
@@ -34,5 +38,5 @@ if [ $i -eq 0 ]
 fi
 chown -R $1:$1 /home/$1
 echo "Changing default shell to bash"
-echo $2 | sudo -S -H -u $1 chsh -s /bin/bash
+echo $newPasswd | sudo -S -H -u $1 chsh -s /bin/bash
 echo "Done"

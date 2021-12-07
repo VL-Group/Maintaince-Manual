@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Usage: su root and place it in /root/fetchDNS and chmod a+x
+# crontab: 0 3 * * 0 /root/fetchDNS
+
 import os
 import urllib.request
 

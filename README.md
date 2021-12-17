@@ -338,11 +338,15 @@ user@host:~$ sudo swapon -a
 
 ### 创建新用户
 
+***需要脚本 [`newuser.sh`](./newuser.sh)***
+
 ```console
 user@host:~$ sudo sh newuser.sh [username] [password]
 ```
 
 ### （仅限重装时使用）自动重设文件夹的所有者
+
+***需要脚本 [`set.sh`](./set.sh)***
 
 重装后，原来的文件夹所有者信息会和当前不对应，要修复它，首先进入 `/mnt/hdd1` 目录:
 
@@ -367,3 +371,21 @@ In CentOS or RHEL:
 ```console
 user@host:~$ sudo usermod -aG wheel USERNAME
 ```
+
+
+### 自动更新 Github Hosts
+
+由于网络条件的原因，部分时段服务器无法访问 Github，因此我们需要设置一个自动更新脚本，来为 Github 配置 Hosts。（来源：https://github.com/ineo6/hosts ， https://gitee.com/ineo6/hosts ）
+
+请服务器管理员使用 `sudo` 权限将本目录下的 [`fetchDNS`](./fetchDNS) 文件下载并放在一个固定目录下（如：`/root`）。
+
+添加可执行权限：`chmod a+x ./fetchDNS`，并尝试运行确保不报错（需要系统中包含 Python 3.4+）。
+
+即，执行 `./fetchDNS` 将会输出 `Set hosts finished.`
+
+编辑 `crontab`：
+```
+0 3 * * 0 /root/fetchDNS
+```
+将会在每周**日**，服务器上时间**3:00 AM**自动执行 `fetchDNS` 脚本。
+

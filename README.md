@@ -22,8 +22,9 @@
       * [创建新用户](#创建新用户)
       * [（仅限重装时使用）自动重设文件夹的所有者](#仅限重装时使用自动重设文件夹的所有者)
       * [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
+      * [自动更新 Github Hosts](#自动更新-github-hosts)
 
-<!-- Added by: runner, at: Tue Sep 28 07:21:42 UTC 2021 -->
+<!-- Added by: runner, at: Fri Dec 17 03:11:54 UTC 2021 -->
 
 <!--te-->
 

@@ -36,3 +36,6 @@ result = os.linesep.join(records)
 
 with open("/etc/hosts", "w") as fp:
     fp.write(result)
+
+    
+print("Set hosts finished.")

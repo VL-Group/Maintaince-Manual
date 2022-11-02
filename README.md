@@ -24,7 +24,8 @@
       * [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
       * [自动更新 Github Hosts](#自动更新-github-hosts)
 
-<!-- Added by: runner, at: Fri Dec 17 03:11:54 UTC 2021 -->
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+<!-- Added by: runner, at: Wed Nov  2 03:36:57 UTC 2022 -->
 
 <!--te-->
 

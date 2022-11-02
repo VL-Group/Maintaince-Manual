@@ -61,7 +61,9 @@
 ```console
 user@host:~$ sudo vim /etc/netplan/00-installer-config.yaml
 ```
+<s>
 以如下形式启用固定 IP 地址，同时指定 DNS 服务器。
+
 ```
 network:
   ethernets:
@@ -76,10 +78,17 @@ network:
 
 启用固定 IP 后，NAT 端口转发才能正常使用。
 
+
 记得应用配置：
 ```console
 user@host:~$ sudo netplan apply
 ```
+</s>
+
+
+
+**现在网络统一使用动态 ip，因此保持默认配置即可。**
+
 
 ### 配置 SSH 服务器
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+IPADDR=$(ip a | grep inet | grep -v 127.0.0.1 | grep -v inet6 | awk '{print $4}' | grep "121")
+PORT=$(cat /etc/ssh/sshd_config | grep "Port " | awk '{print $2}')
+echo "addr: ${IPADDR}, port: ${PORT}"
+
 if [ $# -eq 0 ]
     then
         echo "Wrong input arguments, expect [username]"

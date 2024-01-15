@@ -12,8 +12,8 @@ fi
 
 echo "Adding user and group '$1'"
 newPasswd=$(openssl rand -base64 14)
-echo $newPasswd
-
+echo "user: $1"
+echo "password: $newPasswd"
 
 useradd -m -p $(openssl passwd -1 $newPasswd) -U $1
 hdddir=$(find /mnt -maxdepth 2 -name "$1")

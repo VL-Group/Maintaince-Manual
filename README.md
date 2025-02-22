@@ -1,28 +1,28 @@
 # 服务器维护手册
 
 <!--ts-->
-* [服务器维护手册](#服务器维护手册)
-   * [安装纯净系统](#安装纯净系统)
-      * [下载系统镜像 (.iso)](#下载系统镜像-iso)
-      * [使用镜像文件制作 USB 启动盘](#使用镜像文件制作-usb-启动盘)
-      * [安装过程](#安装过程)
-   * [安装后首次运行](#安装后首次运行)
-      * [配置网络](#配置网络)
-      * [配置 SSH 服务器](#配置-ssh-服务器)
-      * [添加新硬盘](#添加新硬盘)
-      * [挂载硬盘](#挂载硬盘)
-      * [驱动](#驱动)
-         * [禁用 X](#禁用-x)
-         * [将 CUDA 可执行文件放入搜索路径](#将-cuda-可执行文件放入搜索路径)
-      * [（可选）安装 CuDNN, NCCL, TensorRT](#可选安装-cudnn-nccl-tensorrt)
-      * [（可选）Linux 软件源镜像](#可选linux-软件源镜像)
-      * [（可选）APT 自动更新](#可选apt-自动更新)
-   * [系统管理](#系统管理)
-      * [更改交换空间大小](#更改交换空间大小)
-      * [创建新用户](#创建新用户)
-      * [（仅限重装时使用）自动重设文件夹的所有者](#仅限重装时使用自动重设文件夹的所有者)
-      * [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
-      * [自动更新 Github Hosts](#自动更新-github-hosts)
+- [服务器维护手册](#服务器维护手册)
+  - [安装纯净系统](#安装纯净系统)
+    - [下载系统镜像 (.iso)](#下载系统镜像-iso)
+    - [使用镜像文件制作 USB 启动盘](#使用镜像文件制作-usb-启动盘)
+    - [安装过程](#安装过程)
+  - [安装后首次运行](#安装后首次运行)
+    - [配置网络](#配置网络)
+    - [配置 SSH 服务器](#配置-ssh-服务器)
+    - [添加新硬盘](#添加新硬盘)
+    - [挂载硬盘](#挂载硬盘)
+    - [显卡驱动](#显卡驱动)
+      - [禁用 X](#禁用-x)
+      - [将 CUDA 可执行文件放入搜索路径](#将-cuda-可执行文件放入搜索路径)
+    - [（可选）安装 CuDNN, NCCL, TensorRT](#可选安装-cudnn-nccl-tensorrt)
+    - [（可选）Linux 软件源镜像](#可选linux-软件源镜像)
+    - [（可选）APT 自动更新](#可选apt-自动更新)
+  - [系统管理](#系统管理)
+    - [更改交换空间大小](#更改交换空间大小)
+    - [创建新用户](#创建新用户)
+    - [（仅限重装时使用）自动重设文件夹的所有者](#仅限重装时使用自动重设文件夹的所有者)
+    - [将一个用户添加到 Sudoers](#将一个用户添加到-sudoers)
+    - [自动更新 Github Hosts](#自动更新-github-hosts)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 <!-- Added by: runner, at: Wed Nov  2 03:36:57 UTC 2022 -->
@@ -35,6 +35,8 @@
 
 ### 下载系统镜像 (.iso)
 
+> 建议下载 server 版的系统，因为它不包含图形界面，更加轻量。
+
 * **Ubuntu** (Debian): https://ubuntu.com/download/server
 * **CentOS** (RHEL): https://www.centos.org/download/
 
@@ -43,7 +45,7 @@
 * 下载 **Rufus**: https://rufus.ie/
 * 找到并选择正确的 USB 设备和镜像文件，其他选项保持默认:
 
-![](a.png)
+![](assets/a.png)
 
 等待制作完成。
 
@@ -79,17 +81,13 @@ network:
 
 启用固定 IP 后，NAT 端口转发才能正常使用。
 
-
 记得应用配置：
 ```console
 user@host:~$ sudo netplan apply
 ```
 </s>
 
-
-
 **现在网络统一使用动态 ip，因此保持默认配置即可。**
-
 
 ### 配置 SSH 服务器
 
@@ -242,20 +240,20 @@ user@host:~$ sudo mount -a
 **注意**：
 如果要使用最后一节的脚本来新建用户和更新文件夹信息的话，请将硬盘挂载到 `/mnt/` 中，如: `/mnt/hdd1`, `/mnt/hdd2`, `/mnt/ssd`.
 
-
-### 驱动
+### 显卡驱动
 
 https://developer.nvidia.com/cuda-downloads
 
 选择正确的系统版本和系统架构， **不要使用** `.run` runfile 的方式安装。
 
-![](b.png)
+![](assets/b.png)
 
 依照网页上给出的指示操作，并**重启系统**。
 
-![](c.png)
+![](assets/c.png)
 
 #### 禁用 X
+
 ```console
 sudo systemctl enable multi-user.target --force
 sudo systemctl set-default multi-user.target
@@ -270,6 +268,8 @@ PATH="/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbi
 ```
 这样就可以运行 `nvcc` 等程序。
 
+> PS: 这样子会让所有用户用到这个环境变量里面的 cuda，如果有同学需要其他版本的 cuda，不建议加这个环境变量。
+
 ### （可选）安装 CuDNN, NCCL, TensorRT
 
 * **CuDNN**
@@ -278,10 +278,9 @@ https://developer.nvidia.com/rdp/cudnn-download
 
 依照 https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html 上的步骤操作。
 
-![](d.png)
+![](assets/d.png)
 
-![](e.png)
-
+![](assets/e.png)
 
 * **NCCL**
 
@@ -289,8 +288,7 @@ https://developer.nvidia.com/nccl/nccl-download
 
 依照 https://docs.nvidia.com/deeplearning/nccl/install-guide/index.html 上的步骤操作。
 
-![](f.png)
-
+![](assets/f.png)
 
 ### （可选）Linux 软件源镜像
 
@@ -304,7 +302,7 @@ user@host:~$ sudo sed -i 's/http:\/\/cn.archive.ubuntu.com/http:\/\/mirror.sjtu.
 
 ### （可选）APT 自动更新
 
-APT 自动更新使系统软件包始终最新，请酌情采用。
+APT 自动更新使系统软件包始终最新，请酌情采用。**（不建议开启！）**
 
 ```console
 user@host:~$ sudo crontab -e
@@ -314,7 +312,7 @@ user@host:~$ sudo crontab -e
 
 ## 系统管理
 
-**请小心使用下面提及的脚本**
+**请小心使用 `scripts/*` 里面的脚本**
 
 这些脚本可以在当前存储库里找到。你可以直接从网页把脚本拷贝到工作目录下，或者使用 `git clone` 克隆下来。
 
@@ -349,7 +347,7 @@ user@host:~$ sudo swapon -a
 
 ### 创建新用户
 
-***需要脚本 [`newuser.sh`](./newuser.sh)***
+***需要脚本 [`newuser.sh`](scripts/newuser.sh)***
 
 ```console
 user@host:~$ sudo sh newuser.sh [username] [password]
@@ -357,7 +355,7 @@ user@host:~$ sudo sh newuser.sh [username] [password]
 
 ### （仅限重装时使用）自动重设文件夹的所有者
 
-***需要脚本 [`set.sh`](./set.sh)***
+***需要脚本 [`set.sh`](scripts/set.sh)***
 
 重装后，原来的文件夹所有者信息会和当前不对应，要修复它，首先进入 `/mnt/hdd1` 目录:
 
@@ -383,20 +381,18 @@ In CentOS or RHEL:
 user@host:~$ sudo usermod -aG wheel USERNAME
 ```
 
-
 ### 自动更新 Github Hosts
 
 由于网络条件的原因，部分时段服务器无法访问 Github，因此我们需要设置一个自动更新脚本，来为 Github 配置 Hosts。（来源：https://github.com/ineo6/hosts ， https://gitee.com/ineo6/hosts ）
 
-请服务器管理员使用 `sudo` 权限将本目录下的 [`fetchDNS`](./fetchDNS) 文件下载并放在一个固定目录下（如：`/root`）。
+请服务器管理员使用 `sudo` 权限将本目录下的 [`fetchDNS.py`](scripts/fetchDNS.py) 文件下载并放在一个固定目录下（如：`/root`）。
 
-添加可执行权限：`chmod a+x ./fetchDNS`，并尝试运行确保不报错（需要系统中包含 Python 3.4+）。
+添加可执行权限：`chmod a+x scripts/fetchDNS.py`，并尝试运行确保不报错（需要系统中包含 Python 3.4+）。
 
-即，执行 `./fetchDNS` 将会输出 `Set hosts finished.`
+即，执行 `python scripts/fetchDNS` 将会输出 `Set hosts finished.`
 
 编辑 `crontab`：
 ```
 0 3 * * 0 /root/fetchDNS
 ```
 将会在每周**日**，服务器上时间**3:00 AM**自动执行 `fetchDNS` 脚本。
-
